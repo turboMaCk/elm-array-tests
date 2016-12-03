@@ -121,7 +121,7 @@ all =
         sliceArrayTests =
             describe "Slice Array"
                 [ test "array < 32" <| \() -> Expect.equal (Array.initialize 31 identity |> Array.slice 31 32) (Array.fromList [])
-                -- , test "array == 32" <| \() -> Expect.equal (Array.initialize 32 identity |> Array.slice 32 33) (Array.fromList [])
+                , test "array == 32" <| \() -> Expect.equal (Array.initialize 32 identity |> Array.slice 32 33) (Array.fromList [])
                 ]
 
         nativeTests =
