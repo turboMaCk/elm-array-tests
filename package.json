@@ -1,0 +1,25 @@
+{
+  "name": "elm-array-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "elm-test": "0.18.0"
+  },
+  "devDependencies": {
+    "elm-test": "^0.18.0"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/elm-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turboMaCk/elm-array-tests.git"
+  },
+  "author": "Marek Fajkus",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/turboMaCk/elm-array-tests/issues"
+  },
+  "homepage": "https://github.com/turboMaCk/elm-array-tests#readme"
+}
