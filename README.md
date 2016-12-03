@@ -32,7 +32,7 @@ $ npm install
 There is shell script in place for building and running tests:
 
 ```shell
-$ tests/run-tests/sh
+$ tests/run-tests.sh
 ```
 
 That's it!
