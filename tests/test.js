@@ -16845,27 +16845,1308 @@ var _elm_lang$core$Task$cmdMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Task'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Task$init, onEffects: _elm_lang$core$Task$onEffects, onSelfMsg: _elm_lang$core$Task$onSelfMsg, tag: 'cmd', cmdMap: _elm_lang$core$Task$cmdMap};
 
-var _elm_lang$core$Tests$all = A2(
-	_elm_community$elm_test$Test$describe,
-	'Sample Test Suite',
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_community$elm_test$Test$describe,
-			'Unit test examples',
-			{
+var _elm_lang$core$Test_Array$mapArray = function (array) {
+	return A2(
+		_elm_lang$core$Array$indexedMap,
+		F2(
+			function (i, el) {
+				var _p0 = A2(_elm_lang$core$Array$get, i, array);
+				if (_p0.ctor === 'Just') {
+					return _p0._0;
+				} else {
+					return el;
+				}
+			}),
+		array);
+};
+var _elm_lang$core$Test_Array$mergeSplit = F2(
+	function (n, arr) {
+		var right = A3(
+			_elm_lang$core$Array$slice,
+			n,
+			_elm_lang$core$Array$length(arr),
+			arr);
+		var left = A3(_elm_lang$core$Array$slice, 0, n, arr);
+		return A2(_elm_lang$core$Array$append, left, right);
+	});
+var _elm_lang$core$Test_Array$holeArray = A3(
+	_elm_lang$core$List$foldl,
+	_elm_lang$core$Test_Array$mergeSplit,
+	_elm_lang$core$Array$fromList(
+		A2(_elm_lang$core$List$range, 0, 100)),
+	A2(_elm_lang$core$List$range, 0, 100));
+var _elm_lang$core$Test_Array$all = function () {
+	var nativeTests = A2(
+		_elm_community$elm_test$Test$describe,
+		'Conversion to JS Arrays',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'jsArrays',
+				function (_p1) {
+					var _p2 = _p1;
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						_elm_lang$core$Array$fromList(
+							A2(_elm_lang$core$List$range, 1, 1100)),
+						_elm_lang$core$Native_Array.fromJSArray(
+							_elm_lang$core$Native_Array.toJSArray(
+								_elm_lang$core$Array$fromList(
+									A2(_elm_lang$core$List$range, 1, 1100)))));
+				}),
+			_1: {ctor: '[]'}
+		});
+	var mappingAndFoldingTests = A2(
+		_elm_community$elm_test$Test$describe,
+		'Mapping and Folding',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'map',
+				function (_p3) {
+					var _p4 = _p3;
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						_elm_lang$core$Array$fromList(
+							{
+								ctor: '::',
+								_0: 1,
+								_1: {
+									ctor: '::',
+									_0: 2,
+									_1: {
+										ctor: '::',
+										_0: 3,
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						A2(
+							_elm_lang$core$Array$map,
+							_elm_lang$core$Basics$sqrt,
+							_elm_lang$core$Array$fromList(
+								{
+									ctor: '::',
+									_0: 1,
+									_1: {
+										ctor: '::',
+										_0: 4,
+										_1: {
+											ctor: '::',
+											_0: 9,
+											_1: {ctor: '[]'}
+										}
+									}
+								})));
+				}),
+			_1: {
 				ctor: '::',
 				_0: A2(
 					_elm_community$elm_test$Test$test,
-					'Addition',
-					function (_p0) {
-						var _p1 = _p0;
-						return A2(_elm_community$elm_test$Expect$equal, 3 + 7, 10);
+					'indexedMap 1',
+					function (_p5) {
+						var _p6 = _p5;
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							_elm_lang$core$Array$fromList(
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {
+										ctor: '::',
+										_0: 5,
+										_1: {
+											ctor: '::',
+											_0: 10,
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							A2(
+								_elm_lang$core$Array$indexedMap,
+								F2(
+									function (x, y) {
+										return x * y;
+									}),
+								_elm_lang$core$Array$fromList(
+									{
+										ctor: '::',
+										_0: 5,
+										_1: {
+											ctor: '::',
+											_0: 5,
+											_1: {
+												ctor: '::',
+												_0: 5,
+												_1: {ctor: '[]'}
+											}
+										}
+									})));
 					}),
-				_1: {ctor: '[]'}
-			}),
-		_1: {ctor: '[]'}
-	});
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$test,
+						'indexedMap 2',
+						function (_p7) {
+							var _p8 = _p7;
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								A2(_elm_lang$core$List$range, 0, 99),
+								_elm_lang$core$Array$toList(
+									A2(
+										_elm_lang$core$Array$indexedMap,
+										_elm_lang$core$Basics$always,
+										A2(_elm_lang$core$Array$repeat, 100, 0))));
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$test,
+							'large indexed map',
+							function (_p9) {
+								var _p10 = _p9;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									A2(_elm_lang$core$List$range, 0, 32768 - 1),
+									_elm_lang$core$Array$toList(
+										_elm_lang$core$Test_Array$mapArray(
+											A2(_elm_lang$core$Array$initialize, 32768, _elm_lang$core$Basics$identity))));
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$test,
+								'foldl 1',
+								function (_p11) {
+									var _p12 = _p11;
+									return A2(
+										_elm_community$elm_test$Expect$equal,
+										{
+											ctor: '::',
+											_0: 3,
+											_1: {
+												ctor: '::',
+												_0: 2,
+												_1: {
+													ctor: '::',
+													_0: 1,
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										A3(
+											_elm_lang$core$Array$foldl,
+											F2(
+												function (x, y) {
+													return {ctor: '::', _0: x, _1: y};
+												}),
+											{ctor: '[]'},
+											_elm_lang$core$Array$fromList(
+												{
+													ctor: '::',
+													_0: 1,
+													_1: {
+														ctor: '::',
+														_0: 2,
+														_1: {
+															ctor: '::',
+															_0: 3,
+															_1: {ctor: '[]'}
+														}
+													}
+												})));
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'foldl 2',
+									function (_p13) {
+										var _p14 = _p13;
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											33,
+											A3(
+												_elm_lang$core$Array$foldl,
+												F2(
+													function (x, y) {
+														return x + y;
+													}),
+												0,
+												A2(_elm_lang$core$Array$repeat, 33, 1)));
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'foldr 1',
+										function (_p15) {
+											var _p16 = _p15;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												15,
+												A3(
+													_elm_lang$core$Array$foldr,
+													F2(
+														function (x, y) {
+															return x + y;
+														}),
+													0,
+													A2(_elm_lang$core$Array$repeat, 3, 5)));
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'foldr 2',
+											function (_p17) {
+												var _p18 = _p17;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													{
+														ctor: '::',
+														_0: 1,
+														_1: {
+															ctor: '::',
+															_0: 2,
+															_1: {
+																ctor: '::',
+																_0: 3,
+																_1: {ctor: '[]'}
+															}
+														}
+													},
+													A3(
+														_elm_lang$core$Array$foldr,
+														F2(
+															function (x, y) {
+																return {ctor: '::', _0: x, _1: y};
+															}),
+														{ctor: '[]'},
+														_elm_lang$core$Array$fromList(
+															{
+																ctor: '::',
+																_0: 1,
+																_1: {
+																	ctor: '::',
+																	_0: 2,
+																	_1: {
+																		ctor: '::',
+																		_0: 3,
+																		_1: {ctor: '[]'}
+																	}
+																}
+															})));
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'foldr 3',
+												function (_p19) {
+													var _p20 = _p19;
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														53,
+														A3(
+															_elm_lang$core$Array$foldr,
+															F2(
+																function (x, y) {
+																	return x - y;
+																}),
+															54,
+															_elm_lang$core$Array$fromList(
+																{
+																	ctor: '::',
+																	_0: 10,
+																	_1: {
+																		ctor: '::',
+																		_0: 11,
+																		_1: {ctor: '[]'}
+																	}
+																})));
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'filter',
+													function (_p21) {
+														var _p22 = _p21;
+														return A2(
+															_elm_community$elm_test$Expect$equal,
+															_elm_lang$core$Array$fromList(
+																{
+																	ctor: '::',
+																	_0: 2,
+																	_1: {
+																		ctor: '::',
+																		_0: 4,
+																		_1: {
+																			ctor: '::',
+																			_0: 6,
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}),
+															A2(
+																_elm_lang$core$Array$filter,
+																function (x) {
+																	return _elm_lang$core$Native_Utils.eq(
+																		A2(_elm_lang$core$Basics_ops['%'], x, 2),
+																		0);
+																},
+																_elm_lang$core$Array$fromList(
+																	A2(_elm_lang$core$List$range, 1, 6))));
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	var takingArraysApartTests = A2(
+		_elm_community$elm_test$Test$describe,
+		'Taking Arrays Apart',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'toList',
+				function (_p23) {
+					var _p24 = _p23;
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						{
+							ctor: '::',
+							_0: 3,
+							_1: {
+								ctor: '::',
+								_0: 5,
+								_1: {
+									ctor: '::',
+									_0: 8,
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						_elm_lang$core$Array$toList(
+							_elm_lang$core$Array$fromList(
+								{
+									ctor: '::',
+									_0: 3,
+									_1: {
+										ctor: '::',
+										_0: 5,
+										_1: {
+											ctor: '::',
+											_0: 8,
+											_1: {ctor: '[]'}
+										}
+									}
+								})));
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_community$elm_test$Test$test,
+					'toIndexedList',
+					function (_p25) {
+						var _p26 = _p25;
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 0, _1: 'cat'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 1, _1: 'dog'},
+									_1: {ctor: '[]'}
+								}
+							},
+							_elm_lang$core$Array$toIndexedList(
+								_elm_lang$core$Array$fromList(
+									{
+										ctor: '::',
+										_0: 'cat',
+										_1: {
+											ctor: '::',
+											_0: 'dog',
+											_1: {ctor: '[]'}
+										}
+									})));
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$test,
+						'slice 1',
+						function (_p27) {
+							var _p28 = _p27;
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								_elm_lang$core$Array$fromList(
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {
+											ctor: '::',
+											_0: 1,
+											_1: {
+												ctor: '::',
+												_0: 2,
+												_1: {ctor: '[]'}
+											}
+										}
+									}),
+								A3(
+									_elm_lang$core$Array$slice,
+									0,
+									3,
+									_elm_lang$core$Array$fromList(
+										{
+											ctor: '::',
+											_0: 0,
+											_1: {
+												ctor: '::',
+												_0: 1,
+												_1: {
+													ctor: '::',
+													_0: 2,
+													_1: {
+														ctor: '::',
+														_0: 3,
+														_1: {
+															ctor: '::',
+															_0: 4,
+															_1: {ctor: '[]'}
+														}
+													}
+												}
+											}
+										})));
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$test,
+							'slice 2',
+							function (_p29) {
+								var _p30 = _p29;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_elm_lang$core$Array$fromList(
+										{
+											ctor: '::',
+											_0: 1,
+											_1: {
+												ctor: '::',
+												_0: 2,
+												_1: {
+													ctor: '::',
+													_0: 3,
+													_1: {ctor: '[]'}
+												}
+											}
+										}),
+									A3(
+										_elm_lang$core$Array$slice,
+										1,
+										4,
+										_elm_lang$core$Array$fromList(
+											{
+												ctor: '::',
+												_0: 0,
+												_1: {
+													ctor: '::',
+													_0: 1,
+													_1: {
+														ctor: '::',
+														_0: 2,
+														_1: {
+															ctor: '::',
+															_0: 3,
+															_1: {
+																ctor: '::',
+																_0: 4,
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											})));
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$test,
+								'slice 3',
+								function (_p31) {
+									var _p32 = _p31;
+									return A2(
+										_elm_community$elm_test$Expect$equal,
+										_elm_lang$core$Array$fromList(
+											{
+												ctor: '::',
+												_0: 1,
+												_1: {
+													ctor: '::',
+													_0: 2,
+													_1: {
+														ctor: '::',
+														_0: 3,
+														_1: {ctor: '[]'}
+													}
+												}
+											}),
+										A3(
+											_elm_lang$core$Array$slice,
+											1,
+											-1,
+											_elm_lang$core$Array$fromList(
+												{
+													ctor: '::',
+													_0: 0,
+													_1: {
+														ctor: '::',
+														_0: 1,
+														_1: {
+															ctor: '::',
+															_0: 2,
+															_1: {
+																ctor: '::',
+																_0: 3,
+																_1: {
+																	ctor: '::',
+																	_0: 4,
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
+												})));
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'slice 4',
+									function (_p33) {
+										var _p34 = _p33;
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											_elm_lang$core$Array$fromList(
+												{
+													ctor: '::',
+													_0: 2,
+													_1: {ctor: '[]'}
+												}),
+											A3(
+												_elm_lang$core$Array$slice,
+												-3,
+												-2,
+												_elm_lang$core$Array$fromList(
+													{
+														ctor: '::',
+														_0: 0,
+														_1: {
+															ctor: '::',
+															_0: 1,
+															_1: {
+																ctor: '::',
+																_0: 2,
+																_1: {
+																	ctor: '::',
+																	_0: 3,
+																	_1: {
+																		ctor: '::',
+																		_0: 4,
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}
+														}
+													})));
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'slice 5',
+										function (_p35) {
+											var _p36 = _p35;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												63,
+												_elm_lang$core$Array$length(
+													A3(
+														_elm_lang$core$Array$slice,
+														65,
+														65 + 63,
+														_elm_lang$core$Array$fromList(
+															A2(_elm_lang$core$List$range, 1, 200)))));
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	var getAndSetTests = A2(
+		_elm_community$elm_test$Test$describe,
+		'Get and Set',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'get',
+				function (_p37) {
+					var _p38 = _p37;
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						_elm_lang$core$Maybe$Just(2),
+						A2(
+							_elm_lang$core$Array$get,
+							1,
+							_elm_lang$core$Array$fromList(
+								{
+									ctor: '::',
+									_0: 3,
+									_1: {
+										ctor: '::',
+										_0: 2,
+										_1: {
+											ctor: '::',
+											_0: 1,
+											_1: {ctor: '[]'}
+										}
+									}
+								})));
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_community$elm_test$Test$test,
+					'get 2',
+					function (_p39) {
+						var _p40 = _p39;
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							_elm_lang$core$Maybe$Nothing,
+							A2(
+								_elm_lang$core$Array$get,
+								5,
+								_elm_lang$core$Array$fromList(
+									{
+										ctor: '::',
+										_0: 3,
+										_1: {
+											ctor: '::',
+											_0: 2,
+											_1: {
+												ctor: '::',
+												_0: 1,
+												_1: {ctor: '[]'}
+											}
+										}
+									})));
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$test,
+						'get 3',
+						function (_p41) {
+							var _p42 = _p41;
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								_elm_lang$core$Maybe$Nothing,
+								A2(
+									_elm_lang$core$Array$get,
+									-1,
+									_elm_lang$core$Array$fromList(
+										{
+											ctor: '::',
+											_0: 3,
+											_1: {
+												ctor: '::',
+												_0: 2,
+												_1: {
+													ctor: '::',
+													_0: 1,
+													_1: {ctor: '[]'}
+												}
+											}
+										})));
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$test,
+							'set',
+							function (_p43) {
+								var _p44 = _p43;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_elm_lang$core$Array$fromList(
+										{
+											ctor: '::',
+											_0: 1,
+											_1: {
+												ctor: '::',
+												_0: 7,
+												_1: {
+													ctor: '::',
+													_0: 3,
+													_1: {ctor: '[]'}
+												}
+											}
+										}),
+									A3(
+										_elm_lang$core$Array$set,
+										1,
+										7,
+										_elm_lang$core$Array$fromList(
+											{
+												ctor: '::',
+												_0: 1,
+												_1: {
+													ctor: '::',
+													_0: 2,
+													_1: {
+														ctor: '::',
+														_0: 3,
+														_1: {ctor: '[]'}
+													}
+												}
+											})));
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+	var basicsTests = A2(
+		_elm_community$elm_test$Test$describe,
+		'Basics',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'length',
+				function (_p45) {
+					var _p46 = _p45;
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						3,
+						_elm_lang$core$Array$length(
+							_elm_lang$core$Array$fromList(
+								{
+									ctor: '::',
+									_0: 1,
+									_1: {
+										ctor: '::',
+										_0: 2,
+										_1: {
+											ctor: '::',
+											_0: 3,
+											_1: {ctor: '[]'}
+										}
+									}
+								})));
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_community$elm_test$Test$test,
+					'length - Long',
+					function (_p47) {
+						var _p48 = _p47;
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							10000,
+							_elm_lang$core$Array$length(
+								A2(_elm_lang$core$Array$repeat, 10000, 0)));
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$test,
+						'push',
+						function (_p49) {
+							var _p50 = _p49;
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								_elm_lang$core$Array$fromList(
+									{
+										ctor: '::',
+										_0: 1,
+										_1: {
+											ctor: '::',
+											_0: 2,
+											_1: {
+												ctor: '::',
+												_0: 3,
+												_1: {ctor: '[]'}
+											}
+										}
+									}),
+								A2(
+									_elm_lang$core$Array$push,
+									3,
+									_elm_lang$core$Array$fromList(
+										{
+											ctor: '::',
+											_0: 1,
+											_1: {
+												ctor: '::',
+												_0: 2,
+												_1: {ctor: '[]'}
+											}
+										})));
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$test,
+							'append',
+							function (_p51) {
+								var _p52 = _p51;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									{
+										ctor: '::',
+										_0: 42,
+										_1: {
+											ctor: '::',
+											_0: 42,
+											_1: {
+												ctor: '::',
+												_0: 81,
+												_1: {
+													ctor: '::',
+													_0: 81,
+													_1: {
+														ctor: '::',
+														_0: 81,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									},
+									_elm_lang$core$Array$toList(
+										A2(
+											_elm_lang$core$Array$append,
+											A2(_elm_lang$core$Array$repeat, 2, 42),
+											A2(_elm_lang$core$Array$repeat, 3, 81))));
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$test,
+								'appendEmpty 1',
+								function (_p53) {
+									var _p54 = _p53;
+									return A2(
+										_elm_community$elm_test$Expect$equal,
+										A2(_elm_lang$core$List$range, 1, 33),
+										_elm_lang$core$Array$toList(
+											A2(
+												_elm_lang$core$Array$append,
+												_elm_lang$core$Array$empty,
+												_elm_lang$core$Array$fromList(
+													A2(_elm_lang$core$List$range, 1, 33)))));
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'appendEmpty 2',
+									function (_p55) {
+										var _p56 = _p55;
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											A2(_elm_lang$core$List$range, 1, 33),
+											_elm_lang$core$Array$toList(
+												A2(
+													_elm_lang$core$Array$append,
+													_elm_lang$core$Array$fromList(
+														A2(_elm_lang$core$List$range, 1, 33)),
+													_elm_lang$core$Array$empty)));
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'appendSmall 1',
+										function (_p57) {
+											var _p58 = _p57;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												A2(_elm_lang$core$List$range, 1, 33),
+												_elm_lang$core$Array$toList(
+													A2(
+														_elm_lang$core$Array$append,
+														_elm_lang$core$Array$fromList(
+															A2(_elm_lang$core$List$range, 1, 30)),
+														_elm_lang$core$Array$fromList(
+															A2(_elm_lang$core$List$range, 31, 33)))));
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'appendSmall 2',
+											function (_p59) {
+												var _p60 = _p59;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													A2(_elm_lang$core$List$range, 1, 33),
+													_elm_lang$core$Array$toList(
+														A2(
+															_elm_lang$core$Array$append,
+															_elm_lang$core$Array$fromList(
+																A2(_elm_lang$core$List$range, 1, 3)),
+															_elm_lang$core$Array$fromList(
+																A2(_elm_lang$core$List$range, 4, 33)))));
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'appendAndSlice',
+												function (_p61) {
+													var _p62 = _p61;
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														A2(_elm_lang$core$List$range, 0, 100),
+														_elm_lang$core$Array$toList(_elm_lang$core$Test_Array$holeArray));
+												}),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	var creationTests = A2(
+		_elm_community$elm_test$Test$describe,
+		'Creation',
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'empty',
+				function (_p63) {
+					var _p64 = _p63;
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						_elm_lang$core$Array$empty,
+						_elm_lang$core$Array$fromList(
+							{ctor: '[]'}));
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_community$elm_test$Test$test,
+					'initialize',
+					function (_p65) {
+						var _p66 = _p65;
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							A2(_elm_lang$core$Array$initialize, 4, _elm_lang$core$Basics$identity),
+							_elm_lang$core$Array$fromList(
+								{
+									ctor: '::',
+									_0: 0,
+									_1: {
+										ctor: '::',
+										_0: 1,
+										_1: {
+											ctor: '::',
+											_0: 2,
+											_1: {
+												ctor: '::',
+												_0: 3,
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}));
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$test,
+						'initialize 2',
+						function (_p67) {
+							var _p68 = _p67;
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								A2(
+									_elm_lang$core$Array$initialize,
+									4,
+									function (n) {
+										return n * n;
+									}),
+								_elm_lang$core$Array$fromList(
+									{
+										ctor: '::',
+										_0: 0,
+										_1: {
+											ctor: '::',
+											_0: 1,
+											_1: {
+												ctor: '::',
+												_0: 4,
+												_1: {
+													ctor: '::',
+													_0: 9,
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}));
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$test,
+							'initialize 3',
+							function (_p69) {
+								var _p70 = _p69;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									A2(
+										_elm_lang$core$Array$initialize,
+										4,
+										_elm_lang$core$Basics$always(0)),
+									_elm_lang$core$Array$fromList(
+										{
+											ctor: '::',
+											_0: 0,
+											_1: {
+												ctor: '::',
+												_0: 0,
+												_1: {
+													ctor: '::',
+													_0: 0,
+													_1: {
+														ctor: '::',
+														_0: 0,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}));
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$test,
+								'initialize Empty',
+								function (_p71) {
+									var _p72 = _p71;
+									return A2(
+										_elm_community$elm_test$Expect$equal,
+										A2(_elm_lang$core$Array$initialize, 0, _elm_lang$core$Basics$identity),
+										_elm_lang$core$Array$empty);
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'initialize 4',
+									function (_p73) {
+										var _p74 = _p73;
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											A2(
+												_elm_lang$core$Array$initialize,
+												2,
+												_elm_lang$core$Basics$always(0)),
+											_elm_lang$core$Array$fromList(
+												{
+													ctor: '::',
+													_0: 0,
+													_1: {
+														ctor: '::',
+														_0: 0,
+														_1: {ctor: '[]'}
+													}
+												}));
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'initialize negative',
+										function (_p75) {
+											var _p76 = _p75;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												A2(_elm_lang$core$Array$initialize, -1, _elm_lang$core$Basics$identity),
+												_elm_lang$core$Array$empty);
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'repeat',
+											function (_p77) {
+												var _p78 = _p77;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													A2(_elm_lang$core$Array$repeat, 5, 40),
+													_elm_lang$core$Array$fromList(
+														{
+															ctor: '::',
+															_0: 40,
+															_1: {
+																ctor: '::',
+																_0: 40,
+																_1: {
+																	ctor: '::',
+																	_0: 40,
+																	_1: {
+																		ctor: '::',
+																		_0: 40,
+																		_1: {
+																			ctor: '::',
+																			_0: 40,
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}));
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'repeat 2',
+												function (_p79) {
+													var _p80 = _p79;
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														A2(_elm_lang$core$Array$repeat, 5, 0),
+														_elm_lang$core$Array$fromList(
+															{
+																ctor: '::',
+																_0: 0,
+																_1: {
+																	ctor: '::',
+																	_0: 0,
+																	_1: {
+																		ctor: '::',
+																		_0: 0,
+																		_1: {
+																			ctor: '::',
+																			_0: 0,
+																			_1: {
+																				ctor: '::',
+																				_0: 0,
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}
+																}
+															}));
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'repeat 3',
+													function (_p81) {
+														var _p82 = _p81;
+														return A2(
+															_elm_community$elm_test$Expect$equal,
+															A2(_elm_lang$core$Array$repeat, 3, 'cat'),
+															_elm_lang$core$Array$fromList(
+																{
+																	ctor: '::',
+																	_0: 'cat',
+																	_1: {
+																		ctor: '::',
+																		_0: 'cat',
+																		_1: {
+																			ctor: '::',
+																			_0: 'cat',
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}));
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_community$elm_test$Test$test,
+														'fromList',
+														function (_p83) {
+															var _p84 = _p83;
+															return A2(
+																_elm_community$elm_test$Expect$equal,
+																_elm_lang$core$Array$fromList(
+																	{ctor: '[]'}),
+																_elm_lang$core$Array$empty);
+														}),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	return A2(
+		_elm_community$elm_test$Test$describe,
+		'Array',
+		{
+			ctor: '::',
+			_0: creationTests,
+			_1: {
+				ctor: '::',
+				_0: basicsTests,
+				_1: {
+					ctor: '::',
+					_0: getAndSetTests,
+					_1: {
+						ctor: '::',
+						_0: takingArraysApartTests,
+						_1: {
+							ctor: '::',
+							_0: mappingAndFoldingTests,
+							_1: {
+								ctor: '::',
+								_0: nativeTests,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			}
+		});
+}();
 
 var _rtfeldman$node_test_runner$Chalk$withColorChar = F3(
 	function (icon, textColor, str) {
@@ -17884,7 +19165,7 @@ var _elm_lang$core$Main$emit = _elm_lang$core$Native_Platform.outgoingPort(
 	function (v) {
 		return [v._0, v._1];
 	});
-var _elm_lang$core$Main$main = A2(_rtfeldman$node_test_runner$Test_Runner_Node$run, _elm_lang$core$Main$emit, _elm_lang$core$Tests$all)(_elm_lang$core$Json_Decode$value);
+var _elm_lang$core$Main$main = A2(_rtfeldman$node_test_runner$Test_Runner_Node$run, _elm_lang$core$Main$emit, _elm_lang$core$Test_Array$all)(_elm_lang$core$Json_Decode$value);
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
